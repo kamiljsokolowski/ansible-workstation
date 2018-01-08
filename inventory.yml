@@ -1,0 +1,23 @@
+---
+- name: workstation-ubuntu1604
+  box: ubuntu/xenial64
+  check_updates: false
+  net: private_network
+  ip: 10.10.1.1
+  mem: 2048
+  privileged_script:
+    - bin/add_user_to_sudoers.sh
+  script:
+    - bin/setup_ansible_pip.sh
+
+- name: workstation-ubuntu1710
+  box: ubuntu/artful64
+  check_updates: false
+  net: private_network
+  ip: 10.10.1.2
+  mem: 2048
+  privileged_scripts:
+    - bin/install_legacy_network_tools.sh
+    - bin/add_user_to_sudoers.sh
+  script:
+    - bin/setup_ansible_pip.sh
