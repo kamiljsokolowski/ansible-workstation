@@ -16,6 +16,8 @@ Vagrant.configure(2) do |config|
             node.vm.network "forwarded_port", guest: nodes["forward_host_port"], host: nodes["forward_guest_port"]
           end
           node.vm.provider "virtualbox" do |vb|
+             vb.gui = nodes["gui"]
+             vb.cpus = nodes["cpus"]
              vb.memory = nodes["mem"]
           end
           if nodes["privileged_scripts"]
