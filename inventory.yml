@@ -4,6 +4,8 @@
   check_updates: false
   net: private_network
   ip: 10.10.1.1
-  mem: 2048
+  gui: true
+  cpus: 4
+  mem: 8192
   privileged_script:
     - bin/add_user_to_sudoers.sh
