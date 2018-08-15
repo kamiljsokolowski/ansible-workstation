@@ -1,5 +1,5 @@
 ---
-- name: workstation-ubuntu1804
+- name: devbox-ubuntu1804
   box: ubuntu/bionic64
   check_updates: false
   net: private_network
@@ -7,5 +7,3 @@
   mem: 2048
   privileged_script:
     - bin/add_user_to_sudoers.sh
-  script:
-    - bin/setup_ansible_pip.sh
