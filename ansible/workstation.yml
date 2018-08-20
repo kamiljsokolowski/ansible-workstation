@@ -1,0 +1,57 @@
+---
+- hosts: localhost
+  connection: local
+
+  pre_tasks:
+    - name: enable additional repositories
+      become: yes
+      become_method: sudo
+      apt_repository:
+        update_cache: yes
+        repo: "{{item}}"
+        state: present
+      with_items:
+        - "deb http://archive.canonical.com/ubuntu {{ansible_distribution_release}} partner"
+        - "deb-src http://archive.canonical.com/ubuntu {{ansible_distribution_release}} partner"
+      tags:
+        - pre_task
+        - enable_additional_repositories
+    - name: upgrade existing packages
+      become: yes
+      become_method: sudo
+      apt:
+        update_cache: yes
+        upgrade: yes
+        autoclean: yes
+        autoremove: yes
+      tags:
+        - pre_task
+        - upgrade_existing_packages
+    - name: install base packages
+      become: yes
+      become_method: sudo
+      apt:
+        update_cache: yes
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - "{{ base_packages }}"
+      vars:
+        base_packages:
+          - unattended-upgrades
+          - zsh
+          - tmux
+          - ssh
+          - vim
+          - git
+          - python-setuptools
+          - python-pip
+          - acl
+          - curl
+          - htop
+          - unzip
+          - unrar
+          - tree
+      tags:
+        - pre_task
+        - install_base_package_set
