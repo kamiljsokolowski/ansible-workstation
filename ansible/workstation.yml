@@ -3,6 +3,19 @@
   connection: local
 
   pre_tasks:
+    - name: enable additional repositories
+      become: yes
+      become_method: sudo
+      apt_repository:
+        update_cache: yes
+        repo: "{{item}}"
+        state: present
+      with_items:
+        - "deb http://archive.canonical.com/ubuntu {{ansible_distribution_release}} partner"
+        - "deb-src http://archive.canonical.com/ubuntu {{ansible_distribution_release}} partner"
+      tags:
+        - pre_task
+        - enable_additional_repositories
     - name: upgrade existing packages
       become: yes
       become_method: sudo
